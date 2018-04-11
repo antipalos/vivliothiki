@@ -7,7 +7,7 @@ All nodes should provide citations and references.
 
 ## Contents
 
-1. [Basics](cardano-sl/basics.md) - some very basic stuff, the beginning of the info
+1. [Basics](basics.md) - some very basic stuff, the beginning of the info
 
 ## Documentation sources
 
