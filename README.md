@@ -1,3 +1,3 @@
 # Lib (Documentation)
 
-1. Cardano-SL: [cardano-sl](/cardano-sl/)
+1. [Cardano-SL protocol](/cardano-sl/)
