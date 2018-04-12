@@ -1,5 +1,15 @@
 # Wallets\Addresses (implementation)
 
+## Sources
+Basic info: Cardano uses HD (hierarchical) wallets:
+1. https://cardanodocs.com/cardano/addresses/
+2. https://cardanodocs.com/technical/hd-wallets/
+3. https://github.com/input-output-hk/cardano-sl/blob/master/docs/hd.md
+
+BIP-039 (mnemonic phrase) is used as a standard:
+1. https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki
+2. https://cardanolaunch.com/assets/Ed25519_BIP.pdf
+
 ## Stuff we still need to know:
 1. How exactly 12 words are transformed "root key[s]"? (BIP?)
 2. How exactly Cardano-specific addresses (like `DdzFFzC...dAv7xb`) are derived from root key?
