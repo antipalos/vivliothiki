@@ -32,3 +32,6 @@ But then it's not obvious how exactly different types of addresses are derived f
 since Cardano-addresses looks nothing like Bitcoin-addresses.
 
 Root key derived from 12 words is basically a long randomness. Many different stuff might be produced\derived from it.
+
+[hd.md](https://github.com/input-output-hk/cardano-sl/blob/master/docs/hd.md) describes a lot of this stuff,
+but does not provide actual implementation details - need to work thru BIP and the code.
