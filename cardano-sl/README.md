@@ -8,6 +8,7 @@ All nodes should provide citations and references.
 ## Contents
 
 1. [Basics](basics.md) - some very basic stuff, the beginning of the info
+2. [Wallets\Addresses (implementation)](wallets_and_addresses.md)
 
 ## Documentation sources
 
