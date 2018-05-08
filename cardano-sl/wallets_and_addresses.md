@@ -33,6 +33,23 @@ Descibed as "Hierarchical derivation interface".
 4. Module [Account.hs](https://github.com/input-output-hk/cardano-sl/blob/5af8f0a116069359e6cd4a1b1636394a032f7503/wallet/src/Pos/Wallet/Web/Account.hs)
 contains "Helpers for Wallet Set, Wallet and Account".
 
+### API Handling
+What happens when someone calls API methods to create or restore a wallet
+
+1. This file contains the API endpoint descriptions: https://github.com/input-output-hk/cardano-sl/blob/d69ad6c455890fc961722b36718b65d9e58bde62/wallet-new/src/Cardano/Wallet/API/V1/Wallets.hs
+
+2. This file contains API endpoint payloads (JSON is parsed into those), including `NewWallet`: https://github.com/input-output-hk/cardano-sl/blob/d69ad6c455890fc961722b36718b65d9e58bde62/wallet-new/src/Cardano/Wallet/API/V1/Types.hs#L472
+
+3. This file contains handlers that get executed when API endpoint is called: https://github.com/input-output-hk/cardano-sl/blob/d69ad6c455890fc961722b36718b65d9e58bde62/wallet-new/src/Cardano/Wallet/API/V1/LegacyHandlers/Wallets.hs#L66. Note how this method selects one of two functions to call: `V0.newWallet` or `V0.restoreWalletFromSeed`
+
+4. This file contains those functions that get called from handler: https://github.com/input-output-hk/cardano-sl/blob/fa6ee2bbe5ba1016fba9ceb50b8042c3d2af1041/wallet/src/Pos/Wallet/Web/Methods/Restore.hs#L77. Note, how both of them call `mkWallet` in result with different third boolean transaction (restoration or creation). Function `mkWallet` seem to do all the interesting work.
+
+### [`mkWallet`](https://github.com/input-output-hk/cardano-sl/blob/fa6ee2bbe5ba1016fba9ceb50b8042c3d2af1041/wallet/src/Pos/Wallet/Web/Methods/Restore.hs#L58)
+
+1. First thing it calls [`genSaveRootKey`](https://github.com/input-output-hk/cardano-sl/blob/8d25c2ad3ca2354af8f8c43a2972d1b9a31bf440/wallet/src/Pos/Wallet/Web/Account.hs#L95) with a password and secret words
+
+2. `TODO`
+
 ## Discussion
 
 Need to work thru BIP-39. It might require the same root key being produced from the same mnemonics always.
