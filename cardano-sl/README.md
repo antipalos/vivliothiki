@@ -5,6 +5,12 @@ The implementation itself might be found here: https://github.com/input-output-h
 
 All nodes should provide citations and references.
 
+## Contacts
+
+1. Forum: https://forum.cardano.org/
+2. Telegram developers: https://t.me/CardanoDevelopersOfficial
+3. Russian telegram: https://t.me/CardanoRussiaMain
+
 ## Contents
 
 1. [Basics](basics.md) - some very basic stuff, the beginning of the info
