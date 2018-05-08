@@ -46,9 +46,34 @@ What happens when someone calls API methods to create or restore a wallet
 
 ### [`mkWallet`](https://github.com/input-output-hk/cardano-sl/blob/fa6ee2bbe5ba1016fba9ceb50b8042c3d2af1041/wallet/src/Pos/Wallet/Web/Methods/Restore.hs#L58)
 
-1. First thing it calls [`genSaveRootKey`](https://github.com/input-output-hk/cardano-sl/blob/8d25c2ad3ca2354af8f8c43a2972d1b9a31bf440/wallet/src/Pos/Wallet/Web/Account.hs#L95) with a password and secret words
+1. First thing it calls [`genSaveRootKey`](https://github.com/input-output-hk/cardano-sl/blob/8d25c2ad3ca2354af8f8c43a2972d1b9a31bf440/wallet/src/Pos/Wallet/Web/Account.hs#L95) with a password and secret words, which redirects to the pure [`safeKeysFromPhrase`](https://github.com/input-output-hk/cardano-sl/blob/89c3266a0a3af0b5071d5aa162dfbec8e3204086/wallet/src/Pos/Util/BackupPhrase.hs#L76)
 
 2. `TODO`
+
+### [`safeKeysFromPhrase`](https://github.com/input-output-hk/cardano-sl/blob/89c3266a0a3af0b5071d5aa162dfbec8e3204086/wallet/src/Pos/Util/BackupPhrase.hs#L76)
+This function takes a password (`pp`) and a backup phrase (secret words, `ph`) ad returns a set of keys: `(EncryptedSecretKey, VssKeyPair)`
+
+1. Calls `hashSeed = toHashSeed ph` where `ph` is the secret words
+2. Calls [`deterministicVssKeyGen`](https://github.com/input-output-hk/cardano-sl/blob/8d25c2ad3ca2354af8f8c43a2972d1b9a31bf440/crypto/Pos/Crypto/SecretSharing.hs#L88) with the `hashSeed` from the point 1
+3. `TODO`
+
+### [`toHashSeed`](https://github.com/input-output-hk/cardano-sl/blob/89c3266a0a3af0b5071d5aa162dfbec8e3204086/wallet/src/Pos/Util/BackupPhrase.hs#L65)
+Takes secret words (`bp`)
+
+1. Calls [`toSeed`](https://github.com/input-output-hk/cardano-sl/blob/89c3266a0a3af0b5071d5aa162dfbec8e3204086/wallet/src/Pos/Util/BackupPhrase.hs#L62) on `bp`, which joins words with a space into a single string and applies `fromMnemonic` to it
+2. Calls `blake2b` with the result of the `toSeed`, but `blake2` is actually the [`unsafeAbstractHash`](https://github.com/input-output-hk/cardano-sl/blob/447486e284d006f6d3ac2f7f55115baf18e00efe/crypto/Pos/Crypto/Hashing.hs#L144)
+3. Then calls [`serialize'`](https://github.com/input-output-hk/cardano-sl/blob/8d25c2ad3ca2354af8f8c43a2972d1b9a31bf440/binary/Pos/Binary/Class/Primitive.hs#L67) which redirects to [`serialize`](https://github.com/input-output-hk/cardano-sl/blob/8d25c2ad3ca2354af8f8c43a2972d1b9a31bf440/binary/Pos/Binary/Class/Primitive.hs#L57)
+
+### [`fromMnemonic`](https://github.com/input-output-hk/cardano-sl/blob/89c3266a0a3af0b5071d5aa162dfbec8e3204086/wallet/src/Pos/Util/Mnemonics.hs#L68)
+This function takes mnemonic as a string of space-separated words and returns entropy [(according to BIP)](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki)
+
+1. Asserts: All words are ASKII; There are no more than 48 words; Number of words is divisible by 3
+2. Get separate words and turn them into indexes from the word-list
+3. [`indicesToBS`](https://github.com/input-output-hk/cardano-sl/blob/89c3266a0a3af0b5071d5aa162dfbec8e3204086/wallet/src/Pos/Util/Mnemonics.hs#L122) is used to turn index-list into a `ByteString` (called `ms_bs`)
+4. Enthropy len and checksum len are calculated beautifully as `(ent_len, cs_len) = (word_count * 11) `quotRem` 32`
+5. ByteString `ms_bs` is split into enthropy bytes and checksum bytes as `(ms_ent, ms_cs) = BS.splitAt (ent_len * 4) ms_bs`
+6. Checksum from restored bytes (`ms_cs_num`) is compared to newly compared checksum (`ent_cs_num`), calculated by [`calcCS`](https://github.com/input-output-hk/cardano-sl/blob/89c3266a0a3af0b5071d5aa162dfbec8e3204086/wallet/src/Pos/Util/Mnemonics.hs#L89) (exception if checksums are not equal)
+7. If all is ok - `ms_ent` is returned
 
 ## Discussion
 
