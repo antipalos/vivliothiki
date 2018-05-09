@@ -54,8 +54,10 @@ What happens when someone calls API methods to create or restore a wallet
 This function takes a password (`pp`) and a backup phrase (secret words, `ph`) ad returns a set of keys: `(EncryptedSecretKey, VssKeyPair)`
 
 1. Calls `hashSeed = toHashSeed ph` where `ph` is the secret words
-2. Calls [`deterministicVssKeyGen`](https://github.com/input-output-hk/cardano-sl/blob/8d25c2ad3ca2354af8f8c43a2972d1b9a31bf440/crypto/Pos/Crypto/SecretSharing.hs#L88) with the `hashSeed` from the point 1
-3. `TODO`
+2. Calls [`safeDeterministicKeyGen`](https://github.com/input-output-hk/cardano-sl/blob/05bea127ac698bd8737d88c69e51de02ae3c2c17/crypto/Pos/Crypto/Signing/Safe.hs#L84) with the `hashSeed` from the step 1 and the password. This function returns tuple `(PublicKey, EncryptedSecretKey)` - caller applies `snd` and acquires encrypted secret key as `esk`.
+3. Calls [`deterministicVssKeyGen`](https://github.com/input-output-hk/cardano-sl/blob/8d25c2ad3ca2354af8f8c43a2972d1b9a31bf440/crypto/Pos/Crypto/SecretSharing.hs#L88) with the `hashSeed` from the step 1. This SCRAPE function returns a specific VSS key pair that gets stored as `vss`
+4. Then function just returns marvelous `(,) <$> esk <*> vss` expression that produces an **optional** tuple of the previously calculated values
+
 
 ### [`toHashSeed`](https://github.com/input-output-hk/cardano-sl/blob/89c3266a0a3af0b5071d5aa162dfbec8e3204086/wallet/src/Pos/Util/BackupPhrase.hs#L65)
 Takes secret words (`bp`)
