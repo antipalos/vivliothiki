@@ -77,6 +77,14 @@ This function takes mnemonic as a string of space-separated words and returns en
 6. Checksum from restored bytes (`ms_cs_num`) is compared to newly compared checksum (`ent_cs_num`), calculated by [`calcCS`](https://github.com/input-output-hk/cardano-sl/blob/89c3266a0a3af0b5071d5aa162dfbec8e3204086/wallet/src/Pos/Util/Mnemonics.hs#L89) (exception if checksums are not equal)
 7. If all is ok - `ms_ent` is returned
 
+### [`safeDeterministicKeyGen`](https://github.com/input-output-hk/cardano-sl/blob/05bea127ac698bd8737d88c69e51de02ae3c2c17/crypto/Pos/Crypto/Signing/Safe.hs#L84)
+This function takes a hash-seed as a `ByteString` and a password, and returns a tuple of `(PublicKey, EncryptedSecretKey)`.
+
+1. Calls [`safeCreateKeypairFromSeed`](https://github.com/input-output-hk/cardano-sl/blob/05bea127ac698bd8737d88c69e51de02ae3c2c17/crypto/Pos/Crypto/Signing/Safe.hs#L66) which the seed and a password
+    1. This one just redirects to [`CC.generate`](https://github.com/input-output-hk/cardano-crypto/blob/480839f6ebeec5fd45ffeccc9eeef27df315fae6/src/Cardano/Crypto/Wallet.hs#L89) and saves result as `prv`
+    2. Applies [`CC.toXPub`](https://github.com/input-output-hk/cardano-crypto/blob/480839f6ebeec5fd45ffeccc9eeef27df315fae6/src/Cardano/Crypto/Wallet.hs#L143) to the received a public key from the private
+    3. Returns a tuple of those two
+
 ## Discussion
 
 Need to work thru BIP-39. It might require the same root key being produced from the same mnemonics always.
