@@ -84,6 +84,7 @@ This function takes a hash-seed as a `ByteString` and a password, and returns a 
     1. This one just redirects to [`CC.generate`](https://github.com/input-output-hk/cardano-crypto/blob/480839f6ebeec5fd45ffeccc9eeef27df315fae6/src/Cardano/Crypto/Wallet.hs#L89) and saves result as `prv`
     2. Applies [`CC.toXPub`](https://github.com/input-output-hk/cardano-crypto/blob/480839f6ebeec5fd45ffeccc9eeef27df315fae6/src/Cardano/Crypto/Wallet.hs#L143) to the received a public key from the private
     3. Returns a tuple of those two
+2. The first element of the tuple is mapped into `PublicKey`, but the second element - [`mkEncSecretWithSaltUnsafe`](https://github.com/input-output-hk/cardano-sl/blob/8d25c2ad3ca2354af8f8c43a2972d1b9a31bf440/crypto/Pos/Crypto/Signing/Types/Safe.hs#L83) is called with salt and the passport.
 
 ## Discussion
 
