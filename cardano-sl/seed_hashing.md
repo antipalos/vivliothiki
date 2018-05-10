@@ -27,7 +27,7 @@ Function `unsafeAbstractHash` also uses CBOR serialization inside. Can be replca
 ![](https://i.imgur.com/afQegQb.png)
 
 Which gives the same HEX result as:<br/>
-![](https://i.imgur.com/OKGu6cT.png)
+![](https://i.imgur.com/ZHrklxI.png)
 
 **NOTE:** `cbor.dumps` takes **ByteString**!
 
