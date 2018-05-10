@@ -47,8 +47,12 @@ What happens when someone calls API methods to create or restore a wallet
 ### [`mkWallet`](https://github.com/input-output-hk/cardano-sl/blob/fa6ee2bbe5ba1016fba9ceb50b8042c3d2af1041/wallet/src/Pos/Wallet/Web/Methods/Restore.hs#L58)
 
 1. First thing it calls [`genSaveRootKey`](https://github.com/input-output-hk/cardano-sl/blob/8d25c2ad3ca2354af8f8c43a2972d1b9a31bf440/wallet/src/Pos/Wallet/Web/Account.hs#L95) with a password and secret words, which redirects to the pure [`safeKeysFromPhrase`](https://github.com/input-output-hk/cardano-sl/blob/89c3266a0a3af0b5071d5aa162dfbec8e3204086/wallet/src/Pos/Util/BackupPhrase.hs#L76)
-
-2. `TODO`
+2. Calls `cAddr = encToCId skey` where `skey` is the key created at step 1
+    1. [`encToCId`](https://github.com/input-output-hk/cardano-sl/blob/8d25c2ad3ca2354af8f8c43a2972d1b9a31bf440/wallet/src/Pos/Wallet/Web/ClientTypes/Functions.hs#L47) calls `encToPublic`
+    2. [`encToPublic`](https://github.com/input-output-hk/cardano-sl/blob/8d25c2ad3ca2354af8f8c43a2972d1b9a31bf440/crypto/Pos/Crypto/Signing/Types/Safe.hs#L105) only uses [`encToSecret`](https://github.com/input-output-hk/cardano-sl/blob/8d25c2ad3ca2354af8f8c43a2972d1b9a31bf440/crypto/Pos/Crypto/Signing/Types/Safe.hs#L101) to extract simple secret key from encrypted pair and then calls `toPublic` with the result
+    3. [`toPublic`](https://github.com/input-output-hk/cardano-sl/blob/8d25c2ad3ca2354af8f8c43a2972d1b9a31bf440/crypto/Pos/Crypto/Signing/Types/Signing.hs#L72) only calls `CC.toXPub` and wraps result into `PublicKey` type
+    4. [`toXPub`](https://github.com/input-output-hk/cardano-crypto/blob/480839f6ebeec5fd45ffeccc9eeef27df315fae6/src/Cardano/Crypto/Wallet.hs#L142) from cardano-crypto module does all the work
+3. `TODO`
 
 ### [`safeKeysFromPhrase`](https://github.com/input-output-hk/cardano-sl/blob/89c3266a0a3af0b5071d5aa162dfbec8e3204086/wallet/src/Pos/Util/BackupPhrase.hs#L76)
 This function takes a password (`pp`) and a backup phrase (secret words, `ph`) ad returns a set of keys: `(EncryptedSecretKey, VssKeyPair)`
@@ -72,6 +76,8 @@ This function takes a hash-seed as a `ByteString` and a password, and returns a 
     2. Applies [`CC.toXPub`](https://github.com/input-output-hk/cardano-crypto/blob/480839f6ebeec5fd45ffeccc9eeef27df315fae6/src/Cardano/Crypto/Wallet.hs#L143) to the received a public key from the private
     3. Returns a tuple of those two
 2. The first element of the tuple is mapped into `PublicKey`, but the second element - [`mkEncSecretWithSaltUnsafe`](https://github.com/input-output-hk/cardano-sl/blob/8d25c2ad3ca2354af8f8c43a2972d1b9a31bf440/crypto/Pos/Crypto/Signing/Types/Safe.hs#L83) is called with salt and the passport.
+
+###
 
 ## Discussion
 
