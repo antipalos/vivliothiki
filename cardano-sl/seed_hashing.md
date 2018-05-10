@@ -29,6 +29,8 @@ Function `unsafeAbstractHash` also uses CBOR serialization inside. Can be replca
 Which gives the same HEX result as:<br/>
 ![](https://i.imgur.com/OKGu6cT.png)
 
+**NOTE:** `cbor.dumps` takes **ByteString**!
+
 ### `toHashSeed`
 But this function **also** additionally serializes result from blake2b, using `serialize'`. This might be replicated by additionally calling cbor:<br/>
 ![](https://i.imgur.com/4A1ZkaB.png)
