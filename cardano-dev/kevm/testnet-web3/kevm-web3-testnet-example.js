@@ -2,7 +2,6 @@
 FIRST: copy and run the following npm install lines into your console to install all required modules (if not allready installed)
 
 npm install web3
-npm install crypto
 npm install solc
 npm install request-promise-native
 npm install log4js
@@ -38,7 +37,7 @@ const WAIT_BETWEEN_CALLS = 5000  // to ensure increment request was executed bef
 
 // to work with and switch between different accounts and contracts 
 // config is stored in ./config_[CONFIGURATION].json
-const CONFIGURATION = 'test2'  
+const CONFIGURATION = 'test3'  
 
 // console output is also logged with timestamps in ./config_[CONFIGURATION].log
 // possible levels are: fatal < errror < warn < info < debug
