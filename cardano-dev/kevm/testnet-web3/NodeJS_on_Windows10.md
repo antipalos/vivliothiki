@@ -1,6 +1,6 @@
 # NodeJs on a Windows10 system
 
-This is a short step-by-step guide on how to prepare a Windows 10 computer to execute the Javascript examples in this repository.
+This is a short step-by-step guide on how to prepare a Windows 10 computer to execute the NodeJS/Javascript examples from this repository.
 
 ## 1.) install GIT
 
@@ -20,7 +20,7 @@ Install it with all default settings.
 
 NodeJS contains also npm, the packet manager you will going to use to download and maintain all required packages in the scripts.
 
-Open a command line console with administrative privileges and run 
+Open a command line console with <u>administrative</u> privileges and run 
 
 ```
 npm i npm@latest -g
@@ -32,7 +32,7 @@ Then install the windows build tools (basically Python v2.7)
 npm install --global --production windows-build-tools
 ```
 
-Then install the GYP 
+Then install the GYP (node-gyp is a tool which compiles Node.js Addons, so they can be accessed via require(), just as any other Node.js Module )
 
 ```
 npm install --global node-gyp
@@ -60,13 +60,12 @@ You can create an account or skip it for now, select your preferred GUI design, 
 
 the test scripts require certain packages installed with npm.
 
-Re-open (really! you need to close the console you used to install step1-4) a command line console and execute all npm install commands. 
+Re-open a command line console and execute all npm install commands. Really</u>: re-open! you need to close the console you used to install step1-4, and open a new one, because only this one knows that PYTHON path.
 
 The basic example script requires this packages installed
 
 ```
 npm install web3
-npm install crypto
 npm install solc
 npm install request-promise-native
 npm install log4js
@@ -79,5 +78,11 @@ now navigate to the folder where you have downloaded or git-cloned the testnet e
 
 ```
 node [scriptname].js
+```
+
+for example
+
+```
+node kevm-web3-testnet-example.js
 ```
 
