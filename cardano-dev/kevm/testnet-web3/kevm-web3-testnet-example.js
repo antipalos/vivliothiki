@@ -1,7 +1,8 @@
 /*
-FIRST: copy and run the following npm install lines into your console to install all all required modules (if not allready installed)
+FIRST: copy and run the following npm install lines into your console to install all required modules (if not allready installed)
 
 npm install web3
+npm install crypto
 npm install solc
 npm install request-promise-native
 npm install log4js
@@ -49,6 +50,7 @@ const providerUrl = 'https://kevm-testnet.iohkdev.io:8546'
 // ******************************************************************************
 
 const Web3 = require('web3')
+const crypto = require('crypto')
 const request = require('request-promise-native')
 
 
@@ -108,13 +110,13 @@ const run = async () => {
   } catch (err) {
     const rand = crypto.randomBytes(32).toString('hex');
 	account = web3.eth.accounts.privateKeyToAccount("0x" + rand + "");
+	logger.debug('New random private key stored in ./config_'+CONFIGURATION+'.json for future operations');
+	logger.info('Successfully created a new account in Cardano TestNet');
 	nconf.set('privateKey', '0x'+rand+'');
 	nconf.save(function (err) {
 		if (err) {
-			console.error(err.message);
+			logger.error(err.message);
 			return;
-		} else {
-			logger.debug('was generated and stored in ./config_'+CONFIGURATION+'.json for future operations');
 		}
 	  });
   } 
