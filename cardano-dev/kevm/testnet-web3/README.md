@@ -14,7 +14,7 @@ And it was also posted in the forum: https://forum.cardano.org/t/working-kevm-sm
 >
 > You need to npm install the following packages: web3, solc, and request-promise-native.
 >
-> After installing web3, you MUST apply the small patch included at the beginning of the script.  This patch modifies web3 to not use EIP-155 which the KEVM testnet does not implement.
+> **After installing web3, you MUST apply the small patch included at the beginning of the script.  This patch modifies web3 to not use EIP-155 which the KEVM testnet does not implement.**
 > 
 > The first time you run the script, it will generate a random private key.  Simply add the line of code to the beginning of the script and every time you run it, it will use the same address for following runs.
 > 
