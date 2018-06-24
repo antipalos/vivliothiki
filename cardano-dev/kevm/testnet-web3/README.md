@@ -23,3 +23,18 @@ And it was also posted in the forum: https://forum.cardano.org/t/working-kevm-sm
 > After all this, the script will compile the inline solidity contract (source in the script), deploy it to the testnet, and use the setter and getter methods to demonstrate it working.
 > 
 > Hope this helps someone!
+
+
+
+Before we started collecting Cardano testnet sample scripts in this repository user @gufmar added variable configurations, storing newly created account and deployed smart-contract addresses in separate config_xxxxx.json files. Also all output becomes logged with timestamps to a configuration-related logfile.
+
+
+
+------
+
+
+
+#### Setup guide for Windows computers
+
+[NodeJS_on_Windows10.md](NodeJS_on_Windows10.md) describes how to prepare your Windows Desktop to run this Javascripts.
+
