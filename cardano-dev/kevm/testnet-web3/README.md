@@ -36,5 +36,5 @@ Before we started collecting Cardano testnet sample scripts in this repository u
 
 #### Setup guide for Windows computers
 
-[NodeJS_on_Windows10.md]() describes how to prepare your Windows Desktop to run this Javascripts.
+[NodeJS_on_Windows10.md](NodeJS_on_Windows10.md) describes how to prepare your Windows Desktop to run this Javascripts.
 
