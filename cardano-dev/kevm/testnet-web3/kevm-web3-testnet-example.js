@@ -1,5 +1,5 @@
 /*
-FIRST: copy and run the following npm install lines into your console to install all required modules (if not allready installed)
+FIRST: copy and run the following npm install lines into your console to install all required modules (if not already installed)
 
 npm install web3
 npm install solc
@@ -31,13 +31,13 @@ SECOND: after 'npm install' you must apply the following patch to node_modules/w
 // ******************************************************************************
 // configurable variables
  
-const TARGET_ACCOUNT_BALANCE = 40000000000000000
-const FAUCET_INTERVAL = 60000  // to prevent faucet error (too many requests in given amount of time)
+const TARGET_ACCOUNT_BALANCE = 10000000000000000
+const FAUCET_INTERVAL = 30000  // to prevent faucet error (too many requests in given amount of time)
 const WAIT_BETWEEN_CALLS = 5000  // to ensure increment request was executed before calling new counter value
 
 // to work with and switch between different accounts and contracts 
 // config is stored in ./config_[CONFIGURATION].json
-const CONFIGURATION = 'test3'  
+const CONFIGURATION = 'test14'  
 
 // console output is also logged with timestamps in ./config_[CONFIGURATION].log
 // possible levels are: fatal < errror < warn < info < debug
@@ -229,11 +229,23 @@ const run = async () => {
   // Test setter and getter
   const beforeCount = await instance.methods.getCount().call()
   logger.info('Count before=' + beforeCount)
-  await instance.methods.incrementCounter().send({
+
+  tx = instance.methods.incrementCounter();
+  estimate = await tx.estimateGas();
+  var myGas = 2*estimate;
+  logger.info('calling incrementCounter with estimated gas ' + myGas)
+  // note: any gas limit below 8M (which is a block gas limit) and above gas required for tx should work.
+
+  sendResult = await instance.methods.incrementCounter().send({
     from: account.address,
-    gas: 100000,
+    gas: myGas,
     gasPrice: 5000000000
-  })
+  }, function(error, txHash) {
+      if (error) { console.log(error); }
+      else { logger.info("txHash: "+txHash); }
+  });
+  logger.debug("sendResult: \n" + JSON.stringify(sendResult, null, 4) );
+
   logger.info('waiting ' + WAIT_BETWEEN_CALLS / 1000 + ' seconds...')
   await sleep(WAIT_BETWEEN_CALLS);
   const afterCount = await instance.methods.getCount().call()
