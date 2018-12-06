@@ -16,7 +16,7 @@ python3 -m pip install base58 cbor requests
 
 echo 'Downloading script'
 mkdir -p ~/.local/script
-curl -s 'https://raw.githubusercontent.com/antipalos/vivliothiki/5411339fd1ebd04eb97b7591542fb4b0b5cd04d6/cardano-sl/utils/validation/tx-input-pk/validate-cardano-tx-input-pk.py' > ~/.local/script/validate-cardano-tx-input-pk.py
+curl -s 'https://raw.githubusercontent.com/antipalos/vivliothiki/f204af941e1003490ccb18456a7517ce8d1680a1/cardano-sl/utils/validation/tx-input-pk/validate-cardano-tx-input-pk.py' > ~/.local/script/validate-cardano-tx-input-pk.py
 
 echo 'Linking the script'
 echo 'python3 ~/.local/script/validate-cardano-tx-input-pk.py' > /usr/local/bin/validate-cardano-tx-input-pk
