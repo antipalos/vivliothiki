@@ -32,7 +32,7 @@ def get_tx_output_address(tx_id, idx):
     return tx_outputs[idx][0]
 
 
-print('Decoding transaction...')
+print('Iterating inputs and loading addresses...')
 for i, inp in enumerate(inputs):
     print('-----')
     print(f'Input: {inp}')
