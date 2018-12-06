@@ -1,6 +1,15 @@
 ## About
 A script that allows to validate public-keys for each input in a signed encrypted Cardano transaction.
 
+#### Dependencies
+1. Python 3
+2. Packages:
+    1. `base58`
+    2. `cbor`
+    3. `requests`
+
+The [install script](install.sh) tries to manage the dependencies installation too.
+
 ## Usage
 When you launch the script - it will print a prompt message:
 ```
